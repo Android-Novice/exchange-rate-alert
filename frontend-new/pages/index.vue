@@ -37,7 +37,7 @@
         <div class="rate-label">Current Rate</div>
         <div class="rate-value" v-if="currentRate !== null">
           <span class="currency-from">1 {{ fromCurrency }} =</span>
-          {{ currentRate.toFixed(4) }}
+          {{ currentRate.toFixed(6) }}
           <span class="currency-to">{{ toCurrency }}</span>
         </div>
         <div class="rate-value" v-else>Loading...</div>
@@ -126,7 +126,7 @@ const popularPairs = [
 const changeText = computed(() => {
   if (!prevRate.value || prevRate.value === currentRate.value) return '0.00%'
   const pct = ((currentRate.value - prevRate.value) / prevRate.value * 100)
-  return `${pct > 0 ? '+' : ''}${pct.toFixed(4)}%`
+  return `${pct > 0 ? '+' : ''}${pct.toFixed(6)}%`
 })
 
 const changeClass = computed(() => {

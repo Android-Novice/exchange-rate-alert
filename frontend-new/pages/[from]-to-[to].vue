@@ -19,7 +19,7 @@
         <div class="rate-label">Current Rate</div>
         <div class="rate-value" v-if="currentRate !== null">
           <span class="currency-from">1 {{ from }} =</span>
-          {{ currentRate.toFixed(4) }}
+          {{ currentRate.toFixed(6) }}
           <span class="currency-to">{{ to }}</span>
         </div>
         <div class="rate-value" v-else>Loading...</div>
@@ -59,7 +59,7 @@
       <div v-if="history.length" class="history-list">
         <div v-for="(h, i) in history" :key="i" class="history-item">
           <span class="history-time">{{ h.time.split(' ')[1] }}</span>
-          <span class="history-rate">{{ h.rate.toFixed(4) }}</span>
+          <span class="history-rate">{{ h.rate.toFixed(6) }}</span>
         </div>
       </div>
       <div v-else class="no-data">
@@ -113,13 +113,13 @@ const relatedPairs = ['USD', 'EUR', 'GBP', 'JPY', 'CNY', 'AUD', 'CAD', 'CHF']
 
 const convertedAmount = computed(() => {
   if (currentRate.value === null) return '—'
-  return (amount.value * currentRate.value).toFixed(4)
+  return (amount.value * currentRate.value).toFixed(6)
 })
 
 const changeText = computed(() => {
   if (!prevRate.value || prevRate.value === currentRate.value) return '0.00%'
   const pct = ((currentRate.value - prevRate.value) / prevRate.value * 100)
-  return `${pct > 0 ? '+' : ''}${pct.toFixed(4)}%`
+  return `${pct > 0 ? '+' : ''}${pct.toFixed(6)}%`
 })
 
 const changeClass = computed(() => {
@@ -160,7 +160,7 @@ onUnmounted(() => {
 })
 
 // SEO Meta
-const pageTitle = `${from} to ${to} Exchange Rate - ${currentRate.value ? currentRate.value.toFixed(4) : 'Live'} | Exchange Rate Monitor`
+const pageTitle = `${from} to ${to} Exchange Rate - ${currentRate.value ? currentRate.value.toFixed(6) : 'Live'} | Exchange Rate Monitor`
 const pageDesc = `Live ${from}/${to} exchange rate: convert ${currencyNames[from] || from} to ${currencyNames[to] || to}. Real-time updates, historical data, and free SMS alerts.`
 
 useHead({
