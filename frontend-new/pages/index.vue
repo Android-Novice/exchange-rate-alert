@@ -108,7 +108,8 @@ const currencies = ref(CURRENCIES)
 const fromCurrency = ref('USD')
 const toCurrency = ref('CNY')
 const currentRate = ref(null)
-const prevRate = ref(null)
+const change24h = ref(null)
+const rate24hAgo = ref(null)
 const updateTime = ref('')
 const alerts = ref([])
 
@@ -125,20 +126,21 @@ const popularPairs = [
 
 const changeText = computed(() => {
   if (currentRate.value === null) return '—'
-  if (!prevRate.value || prevRate.value === currentRate.value) return '持平'
-  const pct = ((currentRate.value - prevRate.value) / prevRate.value * 100)
+  if (change24h.value === null || change24h.value === 0) return '持平'
+  const pct = change24h.value
   return `${pct > 0 ? '+' : ''}${pct.toFixed(6)}%`
 })
 
 const changeClass = computed(() => {
   if (currentRate.value === null) return 'neutral'
-  if (!prevRate.value || prevRate.value === currentRate.value) return 'neutral'
-  return currentRate.value > prevRate.value ? 'up' : 'down'
+  if (change24h.value === null || change24h.value === 0) return 'neutral'
+  return change24h.value > 0 ? 'up' : 'down'
 })
 
 function onCurrencyChange() {
   currentRate.value = null
-  prevRate.value = null
+  change24h.value = null
+  rate24hAgo.value = null
   loadRate()
 }
 
@@ -146,8 +148,9 @@ async function loadRate() {
   try {
     const data = await convertRate(fromCurrency.value, toCurrency.value)
     if (data.error) return
-    prevRate.value = currentRate.value
     currentRate.value = data.rate
+    change24h.value = data.change_24h ?? null
+    rate24hAgo.value = data.rate_24h_ago ?? null
     updateTime.value = data.fetched_at || ''
   } catch (e) {
     console.error('Failed to load rate', e)
