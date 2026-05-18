@@ -124,12 +124,14 @@ const popularPairs = [
 ]
 
 const changeText = computed(() => {
-  if (!prevRate.value || prevRate.value === currentRate.value) return '0.00%'
+  if (currentRate.value === null) return '—'
+  if (!prevRate.value || prevRate.value === currentRate.value) return '持平'
   const pct = ((currentRate.value - prevRate.value) / prevRate.value * 100)
   return `${pct > 0 ? '+' : ''}${pct.toFixed(6)}%`
 })
 
 const changeClass = computed(() => {
+  if (currentRate.value === null) return 'neutral'
   if (!prevRate.value || prevRate.value === currentRate.value) return 'neutral'
   return currentRate.value > prevRate.value ? 'up' : 'down'
 })
