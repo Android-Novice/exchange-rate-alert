@@ -37,10 +37,10 @@ def startup():
 
 
 def _scheduler_loop():
-    """后台定时任务：每60秒拉取汇率并检测波动。"""
+    """后台定时任务：每小时拉取汇率并检测波动。"""
     time.sleep(2)
     _fetch_job()
-    schedule.every(60).seconds.do(_fetch_job)
+    schedule.every().hour.do(_fetch_job)
 
     while True:
         schedule.run_pending()
