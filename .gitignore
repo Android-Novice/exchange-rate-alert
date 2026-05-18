@@ -1,0 +1,11 @@
+node_modules/
+.nuxt/
+.output/
+__pycache__/
+*.pyc
+*.db
+.env
+.DS_Store
+Thumbs.db
+frontend/
+*.lock

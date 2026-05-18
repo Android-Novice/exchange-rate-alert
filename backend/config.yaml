@@ -1,0 +1,18 @@
+server:
+  port: 8080
+
+database:
+  host: 127.0.0.1
+  port: 3306
+  user: exchange
+  password: exchange123
+  dbname: exchange_rate
+
+exchange_api:
+  base_url: https://open.er-api.com/v6/latest
+
+sms:
+  access_key_id: "YOUR_ACCESS_KEY_ID"
+  access_key_secret: "YOUR_ACCESS_KEY_SECRET"
+  sign_name: "汇率预警"
+  template_code: "SMS_XXXXXX"
